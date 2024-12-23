@@ -1,0 +1,130 @@
+{{ 'marketin-product-review.css' | asset_url | stylesheet_tag }}
+{{ 'marketin-product-review-common.css' | asset_url | stylesheet_tag }}
+
+{% assign metafields = product.metafields.marketin.reviews.value %}
+
+{% for key_value in metafields %}
+  {% assign reviews = key_value[1] %}
+{% endfor %}
+
+<mkt-review section-id="{{ section.id }}" data-avatar="{{ block.settings.icon_avatar }}" style="
+    --mkt_review_star_size: {{block.settings.star_size}}px;
+    --mkt_review_padding_x: {{block.settings.padding_x}}px;
+    --mkt_review_padding_y: {{block.settings.padding_y}}px;
+  ">
+  <meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+/>
+
+    <p class="review-title">{{block.settings.heading}}</p>
+
+    {% render "marketin-product-review-header"
+      , product: product
+      , block: block
+    %}
+
+    {% render "marketin-product-review-form"
+      , product: product
+      , block: block
+    %}
+
+  {% if reviews != blank %}
+
+    {% render "marketin-product-review-sort" %}
+
+    <mkt-review-list>
+      {% for review in reviews %}
+        <mkt-review-list-item>
+          {% render "marketin-product-review-avatar"
+            , review: review
+            , block: block
+          %}
+
+          <div class="review">
+            <div class="review-info">
+              <div>
+                <mkt-rate rate="{{review.rating}}"></mkt-rate>
+              {% comment %} {% assign rating = review.rating | plus: 0 %}
+                  {% render "marketin-product-review-stars"
+                    , rating: rating
+                    , fill: block.settings.star_fill_color
+            , size: block.settings.star_size %} {% endcomment %}
+              </div>
+              {% render "marketin-product-review-amazon"
+                , from: review.from
+                , block: block
+              %}
+              <p>{{ review.create_at | date: "%Y-%m-%d" }}</p>
+            </div>
+            <p class="review-title">
+              {{ review.title }}
+            </p>
+            <p class="review-desc">
+              {{ review.content }}
+            </p>
+            
+            <div class="review-img">
+              {% if review.images  %}
+                {% for image in review.images %}
+                  <div>
+                    <img src="{{ image }}">
+                  </div>
+                {% endfor %}
+              {% endif %}
+
+              {% if review.videos  %}
+                {% for video in review.videos %}
+                  <div>
+                    <video src="{{video}}"></video>
+                    <div class="media-video">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><g fill-rule="nonzero" fill="none"><rect rx="2" height="20" width="20" opacity=".5" fill="#1F2329"/><path d="M12.548 10.788V9.211c0-.158.05-.34.12-.415l1.663-1.777c.543-.582 1.169-.745 1.169-.122v6.206c0 .623-.626.46-1.17-.121l-1.661-1.778c-.07-.074-.12-.257-.12-.416Zm-.785 1.751c0 .528-.412.956-.92.956H4.42c-.508 0-.92-.428-.92-.956v-5.08c0-.528.412-.956.92-.956h6.422c.509 0 .92.428.92.956v5.08Z" fill="#FFF"/></g></svg>
+                    </div>
+                  </div>
+                {% endfor %}
+              {% endif %}
+            </div>
+          </div>
+        </mkt-review-list-item>
+      {% endfor %}
+    </mkt-review-list>
+    <mkt-review-list-load-more>
+      <button> 
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+        <path
+          d="M8 .5A7.5 7.5 0 1 1 .502 8.19L.5 8.006A.5.5 0 0 1 1 7.5h1.273a.5.5 0 0 1 .5.5 5.227 5.227 0 1 0 10.454 0 5.226 5.226 0 0 0-5.065-5.225l-.17-.002a.5.5 0 0 1-.492-.5V1A.5.5 0 0 1 8 .5Z"
+          fill="#fff"
+        />
+      </svg>  
+      Load more</button>
+    </mkt-review-list-load-more>
+    <mkt-swiper>
+      <div class="swiper">
+        <div class="swiper-wrapper"></div>
+        <!-- 如果需要分页器 -->
+        <div class="swiper-pagination"></div>
+
+        <!-- 如果需要导航按钮 -->
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-close">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="m13.5 12 6.5 6.5-1.5 1.5-6.5-6.5L5.5 20 4 18.5l6.5-6.5L4 5.5 5.5 4l6.5 6.5L18.5 4 20 5.5z"
+              fill="#fff"
+            />
+          </svg>
+        </div>
+      </div>
+      <div class="swiper-overlay" style="display: none"></div>
+    </mkt-swiper>
+  {% endif %}
+</mkt-review>
+
+<script>
+  window.mktReview={
+    shopDomain: '{{shop.permanent_domain}}'
+  }
+</script>
+<script src="{{ 'marketin-product-review.js' | asset_url }}" defer></script>
+<script src="{{ 'marketin-product-review-common.js' | asset_url }}" defer></script>

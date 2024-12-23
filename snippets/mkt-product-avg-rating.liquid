@@ -1,0 +1,12 @@
+
+{{ 'mkt-product-star-rating.css' | asset_url | stylesheet_tag }}
+
+{% assign avg_rating = product.metafields.marketin.reviews.value.stats.rating_average| plus: 0 %}
+{% assign count_rating = product.metafields.marketin.reviews.value.stats.review_count| plus: 0 %}
+
+{% if avg_rating > 0 %}
+<div class="prapp-average-block" style="padding: {{ block.settings.padding_y }}px {{ block.settings.padding_x }}px;" data-product-id="{{ product.id }}">
+  {% comment %} <h4>{{ block.settings.heading }}</h4> {% endcomment %}
+  {% render "mkt-product-star-rating", rating: avg_rating, count: count_rating, fill: block.settings.star_fill_color, size: block.settings.star_size %}
+</div>
+{% endif %}

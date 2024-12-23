@@ -1,0 +1,202 @@
+<section
+    id="MainProductReview-{{ section.id }}"
+    class="section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}"
+    data-section="{{ section.id }}"
+  >
+    
+    {%- style -%}
+      .section-{{ section.id }}-padding {
+        padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+        padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+      }
+  
+      @media screen and (min-width: 750px) {
+        .section-{{ section.id }}-padding {
+          padding-top: {{ section.settings.padding_top }}px;
+          padding-bottom: {{ section.settings.padding_bottom }}px;
+        }
+      }
+    {%- endstyle -%}
+  
+    <div class="page-width">
+        <div class="product product--{{ section.settings.media_size }} product--{{ section.settings.media_position }} ">
+        {% comment %} 添加评论显示 {% endcomment %}
+        {%- for block in section.blocks -%}
+            {%- case block.type -%}
+                {%- when '@app' -%}
+                    {% render block %}
+                {%- when 'mkt_product_review' -%}
+                    {% comment %} {%- if product.metafields.marketin.reviews.value != blank -%} {% endcomment %}
+                    {% render 'marketin-product-review',
+                        product: product,
+                        block: block
+                    %}
+                    {% comment %} {%- endif -%} {% endcomment %}
+            {%- endcase -%}
+        {%- endfor -%}
+        </div>
+    </div>
+
+  </section>
+  
+  {% schema %}
+  {
+    "name": "t:sections.main-product-review.name",
+    "tag": "section",
+    "class": "section",
+    "blocks": [
+      {
+        "type": "@app"
+      },
+      {
+        "type": "custom_liquid",
+        "name": "t:sections.custom-liquid.name",
+        "settings": [
+          {
+            "type": "liquid",
+            "id": "custom_liquid",
+            "label": "t:sections.custom-liquid.settings.custom_liquid.label",
+            "info": "t:sections.custom-liquid.settings.custom_liquid.info"
+          }
+        ]
+      },
+      {
+        "type": "mkt_product_review",
+        "name": "t:sections.main-product-review.blocks.mkt_product_review.name",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "text",
+            "id": "heading",
+            "label": "t:sections.main-product-review.blocks.mkt_product_review.settings.heading.label",
+            "default": "Customer Reviews"
+          },
+          {
+            "type": "text",
+            "id": "write_review",
+            "label": "t:sections.main-product-review.blocks.mkt_product_review.settings.write_review.label",
+            "default": "Write Review"
+          },
+          {
+            "type": "number",
+            "id": "star_size",
+            "label": "t:sections.main-product-review.blocks.mkt_product_review.settings.star_size.label",
+            "default": 20
+          },
+          {
+            "type": "number",
+            "id": "padding_x",
+            "label": "t:sections.main-product-review.blocks.mkt_product_review.settings.padding_x.label",
+            "default": 0
+          },
+          {
+            "type": "number",
+            "id": "padding_y",
+            "label": "t:sections.main-product-review.blocks.mkt_product_review.settings.padding_y.label",
+            "default": 20
+          },                
+          {
+            "type": "select",
+            "id": "icon_avatar",
+            "options": [
+              {
+                "value": "user",
+                "label": "t:sections.main-product-review.blocks.mkt_product_review.settings.icon_avatar.options.user"
+              },
+              {
+                "value": "anonymous",
+                "label": "t:sections.main-product-review.blocks.mkt_product_review.settings.icon_avatar.options.anonymous"
+              }
+            ],
+            "default": "user",
+            "label": "t:sections.main-product-review.blocks.mkt_product_review.settings.icon_avatar.label",
+            "info": "t:sections.main-product-review.blocks.mkt_product_review.settings.icon_avatar.info"
+          },
+          {
+            "type": "checkbox",
+            "id": "icon_amazon",
+            "default": true,
+            "label": "t:sections.main-product-review.blocks.mkt_product_review.settings.icon_amazon.label",
+            "info": "t:sections.main-product-review.blocks.mkt_product_review.settings.icon_amazon.info"
+          }
+        ]
+      }
+    ],
+    "settings": [
+      {
+        "type": "color_scheme",
+        "id": "color_scheme",
+        "label": "t:sections.all.colors.label",
+        "default": "scheme-1"
+      },
+      {
+        "type": "header",
+        "content": "t:sections.main-product.settings.header.content",
+        "info": "t:sections.main-product.settings.header.info"
+      },
+      {
+        "type": "select",
+        "id": "media_size",
+        "options": [
+          {
+            "value": "small",
+            "label": "t:sections.main-product.settings.media_size.options__1.label"
+          },
+          {
+            "value": "medium",
+            "label": "t:sections.main-product.settings.media_size.options__2.label"
+          },
+          {
+            "value": "large",
+            "label": "t:sections.main-product.settings.media_size.options__3.label"
+          }
+        ],
+        "default": "large",
+        "label": "t:sections.main-product.settings.media_size.label",
+        "info": "t:sections.main-product.settings.media_size.info"
+      },
+      {
+        "type": "select",
+        "id": "media_position",
+        "options": [
+          {
+            "value": "left",
+            "label": "t:sections.main-product.settings.media_position.options__1.label"
+          },
+          {
+            "value": "right",
+            "label": "t:sections.main-product.settings.media_position.options__2.label"
+          }
+        ],
+        "default": "left",
+        "label": "t:sections.main-product.settings.media_position.label",
+        "info": "t:sections.main-product.settings.media_position.info"
+      },
+      {
+        "type": "header",
+        "content": "t:sections.all.padding.section_padding_heading"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "t:sections.all.padding.padding_top",
+        "default": 20
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "t:sections.all.padding.padding_bottom",
+        "default": 20
+      }
+    ]
+  }
+  {% endschema %}
+  

@@ -1,0 +1,24 @@
+{% assign avg_rating = product.metafields.marketin.reviews.value.stats.rating_average | plus: 0 %}
+{% assign count_rating = product.metafields.marketin.reviews.value.stats.review_count | plus: 0 %}
+{% assign all_rating = product.metafields.marketin.reviews.value.stats.rating_list %}
+
+<mkt-review-header>
+  <div class="average">
+    <div class="value">{{ avg_rating }}</div>
+    <p class="desc">Based on {{ count_rating }} reviews</p>
+  </div>
+  <div class="progress">
+    {% for item in all_rating %}
+      <mkt-progress>
+        <mkt-rate rate="{{item.rating}}"></mkt-rate>
+        <div class="progress-container">
+          <div class="progress" style="width: {{ item.count  | times: 100 | divided_by: count_rating }}%"></div>
+        </div>
+        <span class="total">{{ item.count }}</span>
+      </mkt-progress>
+    {% endfor %}
+  </div>
+  <mkt-write-review>
+    <button>{{ block.settings.write_review }}</button>
+  </mkt-write-review>
+</mkt-review-header>

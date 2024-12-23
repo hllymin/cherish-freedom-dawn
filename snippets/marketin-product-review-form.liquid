@@ -1,0 +1,80 @@
+<mkt-write-review-form>
+    <div class="form-container">
+        <div class="form-container-title">Write a review</div>
+        <form class="form-wrap">
+          <div class="one-col rateing">
+            <mkt-rate rate="5" form name="rate"></mkt-rate> <span class="tip">Please give us your rating</span>
+          </div>
+          <div class="one-col write-review-title">
+            <span class="label">Title</span>
+            <input type="text" name="title" placeholder="Please fill in" maxlength="500" />
+            <span class="total">0/500</span>
+          </div>
+          <div class="one-col write-review-content">
+            <span class="label">Content</span>
+            <textarea placeholder="Please fill in" name="content" maxlength="5000"></textarea>
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr)">
+              <span class="error"></span>
+              <span class="total">0/5000</span>
+            </div>
+          </div>
+          <div class="write-review-title">
+            <span class="label">Your Name</span>
+            <input type="text" name="author" placeholder="Please fill in" maxlength="50" />
+            <span class="error"></span>
+            <span class="total">0/50</span>
+          </div>
+          <div>
+            <span class="label">Your Email</span>
+            <input type="text" name="email" placeholder="Please fill in" />
+            <span class="error"></span>
+          </div>
+          <div class="one-col write-review-upload">
+            <span class="label">Photo / video</span>
+            <div class="upload-container">
+              <mkt-upload-media>
+                <div class="upload">
+                  <svg viewBox="0 0 8 8" class="add" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      data-follow-fill="#1F2329"
+                      fill="#1F2329"
+                      d="m4.579 0-.001 3.417H8v1.13H4.578V8h-1.13V4.547H0v-1.13h3.447V0h1.13z"
+                    />
+                  </svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="loading" viewBox="0 0 16 16">
+                    <path
+                      d="M8 .5A7.5 7.5 0 1 1 .502 8.19L.5 8.006A.5.5 0 0 1 1 7.5h1.273a.5.5 0 0 1 .5.5 5.227 5.227 0 1 0 10.454 0 5.226 5.226 0 0 0-5.065-5.225l-.17-.002a.5.5 0 0 1-.492-.5V1A.5.5 0 0 1 8 .5Z"
+                      fill="#1F2329"
+                    />
+                  </svg>
+                </div>
+                <input type="file"  multiple hidden accept=".jpg,.jpeg,.png,.gif,.webp,.mp4,.mov"   />
+              </mkt-upload-media>
+            </div>
+            <span class="error"></span>
+          </div>
+        </form>
+        <div class="form-footer">
+          <button type="submit" class="submit">Submit review</button>
+          <button class="cancel">Cancel</button>
+        </div>
+      </div>
+      <div class="form-submit-result">
+        <svg class="heart" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 14">
+          <path
+            d="M4.666 1A3.666 3.666 0 0 0 1 4.666c0 3.665 4.332 6.998 6.665 7.773 2.333-.775 6.665-4.107 6.665-7.773a3.666 3.666 0 0 0-6.665-2.108 3.661 3.661 0 0 0-3-1.558Z"
+            fill="#30A089"
+          />
+        </svg>
+        <svg class="close" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <g fill="none" fill-rule="evenodd">
+            <path
+              d="m13.5 12 6.5 6.5-1.5 1.5-6.5-6.5L5.5 20 4 18.5l6.5-6.5L4 5.5 5.5 4l6.5 6.5L18.5 4 20 5.5z"
+              fill="#646A73"
+            />
+          </g>
+        </svg>
+        <p>We value your input.</p>
+        <p>Your voice means a lot to us.</p>
+      </div>
+  </mkt-write-review-form>

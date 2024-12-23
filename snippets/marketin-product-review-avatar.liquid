@@ -1,0 +1,29 @@
+<div class="avatar">
+  {% if block.settings.icon_avatar == 'anonymous' %}
+    {%  render "marketin-product-review-avatar-anonymous" %}
+  {% else %}
+    {%  if review.avatar %}
+    {% comment %} TODO: user avatar image size aspect_ratio {% endcomment %}
+      <img src="{{ review.avatar }}" width="43" height="43">
+    {% else %}
+      {%  render "marketin-product-review-avatar-anonymous" %}
+    {% endif %}
+  {% endif %}
+</div>
+<div class="name">
+  {% assign author_size = review.author | size %}
+
+  {% if block.settings.icon_avatar == 'anonymous' %}
+    {% if author_size > 0 %}
+      {{ review.author | slice: 0 }}****{{ review.author | slice: -1 }}
+    {% else %}
+      ****
+    {% endif %}
+  {% else %}
+    {% if author_size > 0 %}
+      {{ review.author }}
+    {% else %}
+      ****
+    {% endif %}
+  {% endif %}
+</div>
